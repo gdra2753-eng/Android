@@ -33,7 +33,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
+        "security": "none",
         "wsSettings": {
           "path": "/wb",
           "headers": {
