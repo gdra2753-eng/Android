@@ -5,11 +5,11 @@
   "policy": {
     "levels": {
       "0": {
-        "handshake": 3,
-        "connIdle": 60,
-        "uplinkOnly": 1,
-        "downlinkOnly": 1,
-        "bufferSize": 512
+        "handshake": 4,
+        "connIdle": 300,
+        "uplinkOnly": 2,
+        "downlinkOnly": 5,
+        "bufferSize": 10240
       }
     },
     "system": {
@@ -24,7 +24,7 @@
       "settings": {
         "clients": [
           {
-            "id": "ba0e3984-ccc9-48a3-1744-b2f507f56ce8",
+            "id": "ba0e7481-cpc9-17a3-1744-b2f507f22ce9",
             "level": 0,
             "flow": ""
           }
@@ -35,13 +35,14 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/wb",
+          "path": "/dz",
           "headers": {
             "Host": ""
           }
         },
         "sockopt": {
           "tcpFastOpen": true,
+          "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 30,
           "mark": 0,
@@ -49,7 +50,7 @@
         }
       },
       "sniffing": {
-        "enabled": true,
+        "enabled": false,
         "destOverride": ["http", "tls"],
         "routeOnly": true
       }
@@ -60,12 +61,13 @@
       "tag": "direct",
       "protocol": "freedom",
       "settings": {
-        "domainStrategy": "UseIPv4",
+        "domainStrategy": "UseIPv4v6",
         "userLevel": 0
       },
       "streamSettings": {
         "sockopt": {
           "tcpFastOpen": true,
+          "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 30,
           "mark": 0
@@ -90,14 +92,10 @@
   },
   "dns": {
     "servers": [
-      {
-        "address": "8.8.8.8",
-        "port": 53,
-        "domains": ["geosite:geolocation-!cn"]
-      },
       "1.1.1.1",
+      "8.8.8.8",
       "localhost"
     ],
-    "queryStrategy": "UseIPv4"
+    "queryStrategy": "UseIPv4v6"
   }
 }
