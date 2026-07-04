@@ -24,7 +24,7 @@
       "settings": {
         "clients": [
           {
-            "id": "ba0e3984-ccc9-48a3-1145-b2f507f56ce8",
+            "id": "598c7416-3db0-46ff-b487-7beaa50cc35e",
             "level": 0,
             "flow": ""
           }
@@ -35,7 +35,7 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/dz",
+          "path": "/vless",
           "headers": {
             "Host": ""
           }
