@@ -2,82 +2,67 @@
   "log": {
     "loglevel": "warning"
   },
-  "policy": {
-    "levels": {
-      "0": {
-        "handshake": 4,
-        "connIdle": 300,
-        "uplinkOnly": 2,
-        "downlinkOnly": 5,
-        "bufferSize": 10240
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "8.8.8.8",
+      {
+        "address": "localhost",
+        "skipFallback": true
       }
-    },
-    "system": {
-      "statsInboundUplink": false,
-      "statsInboundDownlink": false
-    }
+    ],
+    "queryStrategy": "UseIPv4v6"
   },
   "inbounds": [
     {
+      "listen": "0.0.0.0",
       "port": 8080,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "598c7416-3db0-46ff-b487-7beaa50cc35e",
-            "level": 0,
-            "flow": ""
+            "id": "e7df536d-9fb2-418a-bdb9-496e9af4fa13",
+            "level": 0
           }
         ],
         "decryption": "none"
       },
       "streamSettings": {
         "network": "ws",
-        "security": "none",
         "wsSettings": {
           "path": "/vless",
-          "headers": {
-            "Host": ""
-          }
+          "headers": {}
         },
         "sockopt": {
           "tcpFastOpen": true,
           "tcpNoDelay": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 30,
-          "mark": 0,
-          "tproxy": "off"
+          "tcpKeepAliveInterval": 15
         }
       },
       "sniffing": {
-        "enabled": false,
-        "destOverride": ["http", "tls"],
-        "routeOnly": true
+        "enabled": false
       }
     }
   ],
   "outbounds": [
     {
-      "tag": "direct",
       "protocol": "freedom",
+      "tag": "direct",
       "settings": {
-        "domainStrategy": "UseIPv4v6",
-        "userLevel": 0
+        "domainStrategy": "UseIPv4v6"
       },
       "streamSettings": {
         "sockopt": {
           "tcpFastOpen": true,
           "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 30,
           "mark": 0
         }
       }
     },
     {
-      "tag": "block",
       "protocol": "blackhole",
-      "settings": {}
+      "tag": "block"
     }
   ],
   "routing": {
@@ -85,17 +70,24 @@
     "rules": [
       {
         "type": "field",
-        "ip": ["geoip:private"],
-        "outboundTag": "block"
+        "network": "udp,tcp",
+        "outboundTag": "direct"
       }
     ]
   },
-  "dns": {
-    "servers": [
-      "1.1.1.1",
-      "8.8.8.8",
-      "localhost"
-    ],
-    "queryStrategy": "UseIPv4v6"
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 4,
+        "connIdle": 180,
+        "uplinkOnly": 2,
+        "downlinkOnly": 2,
+        "bufferSize": 4
+      }
+    },
+    "system": {
+      "statsInboundUplink": false,
+      "statsInboundDownlink": false
+    }
   }
 }
