@@ -2,17 +2,6 @@
   "log": {
     "loglevel": "warning"
   },
-  "dns": {
-    "servers": [
-      "1.1.1.1",
-      "8.8.8.8",
-      {
-        "address": "localhost",
-        "skipFallback": true
-      }
-    ],
-    "queryStrategy": "UseIPv4v6"
-  },
   "inbounds": [
     {
       "listen": "0.0.0.0",
@@ -30,13 +19,8 @@
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
-          "path": "/vless",
+          "path": "/vless-ws",
           "headers": {}
-        },
-        "sockopt": {
-          "tcpFastOpen": true,
-          "tcpNoDelay": true,
-          "tcpKeepAliveInterval": 15
         }
       },
       "sniffing": {
@@ -56,6 +40,9 @@
           "tcpFastOpen": true,
           "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 30,
+          "tcpUserTimeout": 10000,
+          "tcpMaxSeg": 1440,
           "mark": 0
         }
       }
@@ -65,29 +52,22 @@
       "tag": "block"
     }
   ],
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "network": "udp,tcp",
-        "outboundTag": "direct"
-      }
-    ]
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4v6"
   },
   "policy": {
     "levels": {
       "0": {
-        "handshake": 4,
-        "connIdle": 180,
-        "uplinkOnly": 2,
-        "downlinkOnly": 2,
+        "handshake": 2,
+        "connIdle": 120,
+        "uplinkOnly": 1,
+        "downlinkOnly": 1,
         "bufferSize": 4
       }
-    },
-    "system": {
-      "statsInboundUplink": false,
-      "statsInboundDownlink": false
     }
   }
 }
