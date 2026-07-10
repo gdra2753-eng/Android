@@ -4,13 +4,12 @@
   },
   "inbounds": [
     {
-      "listen": "0.0.0.0",
       "port": 8080,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "e7df536d-9fb2-418a-bdb9-496e9af4fa13",
+            "id": "8c5b9b19-b1bb-4333-93a2-aca5c555ce71",
             "level": 0
           }
         ],
@@ -19,55 +18,15 @@
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
-          "path": "/vless-ws",
-          "headers": {}
+          "path": "/vless"
         }
-      },
-      "sniffing": {
-        "enabled": false
       }
     }
   ],
   "outbounds": [
     {
       "protocol": "freedom",
-      "tag": "direct",
-      "settings": {
-        "domainStrategy": "UseIPv4v6"
-      },
-      "streamSettings": {
-        "sockopt": {
-          "tcpFastOpen": true,
-          "tcpNoDelay": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 30,
-          "tcpUserTimeout": 10000,
-          "tcpMaxSeg": 1440,
-          "mark": 0
-        }
-      }
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "block"
+      "settings": {}
     }
-  ],
-  "dns": {
-    "servers": [
-      "1.1.1.1",
-      "8.8.8.8"
-    ],
-    "queryStrategy": "UseIPv4v6"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "handshake": 2,
-        "connIdle": 120,
-        "uplinkOnly": 1,
-        "downlinkOnly": 1,
-        "bufferSize": 4
-      }
-    }
-  }
+  ]
 }
