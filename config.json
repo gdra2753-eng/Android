@@ -5,86 +5,38 @@
   "inbounds": [
     {
       "listen": "0.0.0.0",
-      "port": 8080,
-      "protocol": "vless",
+      "port": 443,
+      "protocol": "shadowsocks",
       "settings": {
-        "clients": [
-          {
-            "id": "8c5b9b19-b1bb-4333-93a2-aca5c555ce71",
-            "level": 0
-          }
-        ],
-        "decryption": "none"
+        "method": "aes-256-gcm",
+        "password": "123gcp",
+        "network": "tcp,udp"
       },
       "streamSettings": {
         "network": "ws",
-        "wsSettings": {
-          "path": "/vless",
-          "headers": {
-            "Host": ""
-          }
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "www.i.ytimg.com",
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/fullchain.pem",
+              "keyFile": "/etc/xray/privkey.pem"
+            }
+          ]
         },
-        "sockopt": {
-          "tcpNoDelay": true,
-          "tcpFastOpen": true,
-          "tcpKeepAliveIdle": 30,
-          "tcpKeepAliveInterval": 15,
-          "tcpMptcp": false
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "www.i.ytimg.com"
+          }
         }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": ["http", "tls"]
       }
     }
   ],
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {
-        "domainStrategy": "UseIP",
-        "redirect": ""
-      },
-      "streamSettings": {
-        "sockopt": {
-          "tcpNoDelay": true,
-          "tcpFastOpen": true,
-          "mark": 0
-        }
-      },
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "block"
+      "settings": {}
     }
-  ],
-  "policy": {
-    "levels": {
-      "0": {
-        "handshake": 4,
-        "connIdle": 90,
-        "uplinkOnly": 2,
-        "downlinkOnly": 2,
-        "bufferSize": 8,
-        "statsUserUplink": false,
-        "statsUserDownlink": false
-      }
-    },
-    "system": {
-      "statsInboundUplink": false,
-      "statsInboundDownlink": false
-    }
-  },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "protocol": ["bittorrent"],
-        "outboundTag": "block"
-      }
-    ]
-  }
+  ]
 }
